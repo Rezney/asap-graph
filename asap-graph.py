@@ -411,8 +411,8 @@ class SARAnalyzer:
         loadtime = []
         runq = []
         plist = []
+        avg1min = []
         avg5min = []
-        avg10min = []
         avg15min = []      
         
         memtime = []
@@ -497,8 +497,8 @@ class SARAnalyzer:
             masked_loadtime.append(len(loadtime))
             runq.extend(list(map(lambda x: float(x[self.indeces.get('runq-sz')]), load_captured)))
             plist.extend(list(map(lambda x: float(x[self.indeces.get('plist-sz')]), load_captured)))
-            avg5min.extend(list(map(lambda x: float(x[self.indeces.get('ldavg-1')]), load_captured)))
-            avg10min.extend(list(map(lambda x: float(x[self.indeces.get('ldavg-5')]), load_captured)))
+            avg1min.extend(list(map(lambda x: float(x[self.indeces.get('ldavg-1')]), load_captured)))
+            avg5min.extend(list(map(lambda x: float(x[self.indeces.get('ldavg-5')]), load_captured)))
             avg15min.extend(list(map(lambda x: float(x[self.indeces.get('ldavg-15')]), load_captured)))
             
             memtime.extend(list(map(get_time_func, mem_captured)))
@@ -642,18 +642,18 @@ class SARAnalyzer:
             
             plt.subplot(311)
             
+            avg1min = ma.MaskedArray(avg1min)
             avg5min = ma.MaskedArray(avg5min)
-            avg10min = ma.MaskedArray(avg10min)
             avg15min = ma.MaskedArray(avg15min)
             if masked_loadtime:
                 for m in masked_loadtime[:-1]:
+                    avg1min[m] = ma.masked
                     avg5min[m] = ma.masked
-                    avg10min[m] = ma.masked
                     avg15min[m] = ma.masked
 
             
-            plt.plot(np.array(loadtime), avg5min, label="avg5min", color='#595b01')
-            plt.plot(np.array(loadtime), avg10min, label="avg10min", color='#ffe600')
+            plt.plot(np.array(loadtime), avg1min, label="avg1min", color='#595b01')
+            plt.plot(np.array(loadtime), avg5min, label="avg5min", color='#ffe600')
             plt.plot(np.array(loadtime), avg15min, label="avg15min", color='#fe7d00')
             plt.plot([], [], label=self.cpu_num, color='black', marker='+', markeredgewidth=3, markersize=3)
             
@@ -961,17 +961,17 @@ class SARAnalyzer:
             
             plt.subplot2grid((3,4), (0, 2), colspan=2)
             
+            avg1min = ma.MaskedArray(avg1min)
             avg5min = ma.MaskedArray(avg5min)
-            avg10min = ma.MaskedArray(avg10min)
             avg15min = ma.MaskedArray(avg15min)
             if masked_loadtime:
                 for m in masked_loadtime[:-1]:
+                    avg1min[m] = ma.masked
                     avg5min[m] = ma.masked
-                    avg10min[m] = ma.masked
                     avg15min[m] = ma.masked
                     
-            plt.plot(np.array(loadtime), avg5min, label="avg5min", color='#595b01')
-            plt.plot(np.array(loadtime), avg10min, label="avg10min", color='#ffe600')
+            plt.plot(np.array(loadtime), avg1min, label="avg1min", color='#595b01')
+            plt.plot(np.array(loadtime), avg5min, label="avg5min", color='#ffe600')
             plt.plot(np.array(loadtime), avg15min, label="avg15min", color='#fe7d00')
             plt.plot([], [], label=self.cpu_num, color='black', marker='+', markeredgewidth=3, markersize=3)
             
