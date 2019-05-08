@@ -37,7 +37,6 @@ import sys
 import shutil
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import matplotlib.pylab as pylab
 import datetime
 import time
 import numpy as np
@@ -178,8 +177,10 @@ class SARAnalyzer:
                     self.rhel_version = 6
                 elif re.search('(3.10)', first_line):
                     self.rhel_version = 7
+                elif re.search('(4.18)', first_line):
+                    self.rhel_version = 8
                 else:
-                    print(Bcolors.FAIL + ("FAIL: Unsupported RHEL/kernel") + Bcolors.ENDC)
+                    print(Bcolors.FAIL + ("FAIL: Unsupported RHEL") + Bcolors.ENDC)
                     return
                 
                 try:
@@ -244,7 +245,7 @@ class SARAnalyzer:
                             elif "kbmemfree" in row:
                                 state = "mem_capturing" 
                                 self.indeces.update(self.return_indeces(row))        
-                            elif self.rhel_version in (6, 7) and "kbswpfree" in row:
+                            elif self.rhel_version in (6, 7, 8) and "kbswpfree" in row:
                                 state = "swp_capturing"
                                 self.indeces.update(self.return_indeces(row))
                             elif self.rhel_version == 5 and "kbswpfree" in row:
@@ -582,7 +583,8 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-                        
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
             plt.subplot2grid((2,2), (1, 0))
             
             procs = ma.MaskedArray(procs)
@@ -605,6 +607,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)          
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
 
             plt.subplot2grid((2,2), (1, 1))
             
@@ -628,6 +631,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                       
             fig = plt.gcf()
             fig.set_size_inches(16.00, 09.00)
@@ -670,6 +674,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
             
             plt.subplot(312)
             
@@ -693,7 +698,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
          
             plt.subplot(313)
             
@@ -718,6 +723,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                       
             fig = plt.gcf()
             fig.set_size_inches(16.00, 09.00)
@@ -760,6 +766,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                       
             fig = plt.gcf()
             fig.set_size_inches(16.00, 09.00)
@@ -794,7 +801,8 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-            
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
             plt.subplot2grid((2,2), (0, 1))
 
             inode_nr = ma.MaskedArray(inode_nr)
@@ -820,7 +828,8 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-           
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
             plt.subplot2grid((2,2), (1, 0), colspan=2)
                         
             tcp_sck = ma.MaskedArray(tcp_sck)
@@ -848,6 +857,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                                   
             fig = plt.gcf()
             fig.set_size_inches(16.00, 09.00)
@@ -882,7 +892,8 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-            
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
             plt.subplot(212)
             
             bwrtn = ma.MaskedArray(bwrtn)
@@ -905,6 +916,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
        
             fig = plt.gcf()
             fig.set_size_inches(16.00, 09.00)
@@ -955,7 +967,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-            
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
             
                 # LOAD
             
@@ -988,7 +1000,8 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-            
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
                 # MEMORY
                 
             plt.subplot2grid((3,4), (1, 0), colspan=2)  
@@ -1022,6 +1035,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
 
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                 
                 # PSWP
 
@@ -1052,6 +1066,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
 
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
             
                 # PROC/S
             
@@ -1077,6 +1092,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
             
                 # CSWCH
             
@@ -1102,6 +1118,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                                     
                # RUNQ        
                          
@@ -1127,6 +1144,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
                  
                  # PLIST
             
@@ -1152,6 +1170,7 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
             
                 # SOCKETS
             
@@ -1180,7 +1199,9 @@ class SARAnalyzer:
             plt.ylim(ymin, ymax)
             
             plt.xticks(rotation=30)
-                      
+            plt.gca().xaxis.set_major_formatter(mpl.dates.DateFormatter('%m-%d %H:%M'))
+
+
             fig = plt.gcf()
             fig.set_size_inches(19.20, 10.80)
             plt.tight_layout()

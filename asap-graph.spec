@@ -1,11 +1,11 @@
 Name:		asap-graph		
-Version:	1.0.3
+Version:	1.0.4
 Release:	1%{?dist}
 Summary:	sar graphing tool
 
 License:	MIT
 URL:            https://github.com/Rezney/asap-graph		
-Source0:	asap-graph-1.0.3.tar.gz
+Source0:	asap-graph-1.0.4.tar.gz
 
 Requires:	python3-docopt python3-matplotlib	
 
@@ -31,5 +31,9 @@ cp asap-graph %{buildroot}%{_bindir}/asap-graph
 
 %changelog
 
+* Wed May 08 2019 Michal Reznik
+- add RHEL8 support + datetime fix
+
 * Thu Nov 29 2018 George Angelopoulos
-- fix ldavg labels and variable names 
+- fix ldavg labels and variable names
+
